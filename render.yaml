@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: wind-forecast-analytics-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1 --proxy-headers --forwarded-allow-ips "*"
+    healthCheckPath: /api/health
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: DATA_MODE
+        value: live
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: ELEXON_BASE_URL
+        value: https://data.elexon.co.uk/bmrs/api/v1
+      - key: ELEXON_TIMEOUT_SECONDS
+        value: "45"
+      - key: ELEXON_CONNECT_TIMEOUT_SECONDS
+        value: "10"
+      - key: ELEXON_MAX_RETRIES
+        value: "2"
+      - key: ELEXON_CONCURRENCY
+        value: "4"
+      - key: ELEXON_CHUNK_DAYS
+        value: "6"
+      - key: ELEXON_FORECAST_LOOKBACK_DAYS
+        value: "3"
+      - key: CACHE_TTL_SECONDS
+        value: "900"
+      - key: CACHE_MAX_ENTRIES
+        value: "128"
+      - key: PREWARM_DEFAULT_RANGE
+        value: "true"
+      - key: FRONTEND_ORIGINS
+        sync: false

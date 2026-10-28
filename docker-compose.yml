@@ -1,0 +1,54 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    image: wind-forecast-analytics-api:local
+    environment:
+      DATA_MODE: ${DATA_MODE:-live}
+      ENVIRONMENT: ${ENVIRONMENT:-docker}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ELEXON_BASE_URL: ${ELEXON_BASE_URL:-https://data.elexon.co.uk/bmrs/api/v1}
+      ELEXON_TIMEOUT_SECONDS: ${ELEXON_TIMEOUT_SECONDS:-45}
+      ELEXON_CONNECT_TIMEOUT_SECONDS: ${ELEXON_CONNECT_TIMEOUT_SECONDS:-10}
+      ELEXON_MAX_RETRIES: ${ELEXON_MAX_RETRIES:-2}
+      ELEXON_CONCURRENCY: ${ELEXON_CONCURRENCY:-4}
+      ELEXON_CHUNK_DAYS: ${ELEXON_CHUNK_DAYS:-6}
+      ELEXON_FORECAST_LOOKBACK_DAYS: ${ELEXON_FORECAST_LOOKBACK_DAYS:-3}
+      CACHE_TTL_SECONDS: ${CACHE_TTL_SECONDS:-900}
+      CACHE_MAX_ENTRIES: ${CACHE_MAX_ENTRIES:-128}
+      PREWARM_DEFAULT_RANGE: ${PREWARM_DEFAULT_RANGE:-true}
+      FRONTEND_ORIGINS: ${FRONTEND_ORIGINS:-http://localhost:8080}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)",
+        ]
+      interval: 30s
+      timeout: 6s
+      start_period: 35s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: /api
+    image: wind-forecast-analytics-web:local
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
