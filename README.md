@@ -722,13 +722,13 @@ Verified in this environment:
 - Production preview, SPA routes, charts, filters, fixed mode, error/retry, and CSV export working in a browser.
 - Lighthouse accessibility, best-practices, and SEO scores of 100 on Overview, Forecast Explorer, and Accuracy Analysis.
 - Docker Compose images built, both containers healthy, nginx proxy and Swagger working, and the backend running as a non-root user.
+- Public deployment on Vercel (frontend) and Render (backend) on 28 October 2026: health check `ok` in `live` mode, CORS accepting the Vercel origin, Swagger reachable, and the app pages loading.
 
 Not verified:
 
-- Vercel, Render, or Heroku deployment.
-- Any live deployment URL.
-- Platform-specific runtime/version behaviour for Render and Heroku.
+- Heroku deployment. `backend/Procfile` and `backend/runtime.txt` are supplied but were not exercised; Render is the platform actually used.
 - Manual assistive-technology testing, load testing, or security testing.
+- A recorded video walkthrough.
 
 No API data, deployment URL, or test result in this document is fabricated. Synthetic fixture values are explicitly labelled. Real Elexon values are cited from actual live queries, with the caveat that upstream data can be revised.
 
