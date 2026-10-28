@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    @apply bg-canvas;
+    scrollbar-color: #3d3d3d #050505;
+  }
+
+  body {
+    @apply m-0 min-w-[320px] bg-canvas text-ink antialiased;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #ffd400;
+    color: #050505;
+  }
+
+  a {
+    @apply text-inherit;
+  }
+
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.85);
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3d3d3d transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #3d3d3d;
+    border: 2px solid #050505;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-sm border border-line bg-panel;
+  }
+
+  .panel-pad {
+    @apply p-4 sm:p-5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border px-3 py-2 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .btn-primary {
+    @apply border-accent bg-accent text-canvas hover:border-accent-strong hover:bg-accent-strong;
+  }
+
+  .btn-secondary {
+    @apply border-line-strong bg-panel text-ink hover:border-muted hover:bg-raised;
+  }
+
+  .btn-ghost {
+    @apply border-transparent bg-transparent text-muted hover:bg-raised hover:text-ink;
+  }
+
+  .input {
+    @apply h-10 w-full rounded-sm border border-line-strong bg-canvas px-3 text-sm text-ink placeholder:text-faint focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30;
+  }
+
+  .label {
+    @apply block text-xs font-semibold uppercase tracking-[0.09em] text-muted;
+  }
+
+  .link {
+    @apply text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent;
+  }
+
+  .table-cell {
+    @apply whitespace-nowrap px-3 py-2.5 text-sm;
+  }
+
+  .skeleton {
+    @apply animate-shimmer rounded bg-line/80;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
