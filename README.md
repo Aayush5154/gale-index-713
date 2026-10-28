@@ -3,6 +3,7 @@
 **Repository handle:** `gale-index-713`  
 **Live app:** <https://windforecast5154.vercel.app>  
 **Live API:** <https://wind-forecast-e9oq.onrender.com/docs>  
+**Demo video:** <https://youtu.be/MyGoVFgtJzk>  
 **Status:** deployed MVP. Live Elexon access, backend tests, frontend build/lint, Lighthouse audits, the Docker Compose runtime, and a public Vercel + Render deployment were executed.
 
 A full-stack analytics prototype for GB electricity procurement teams who need to audit national wind forecasts at the moment a day-ahead decision had to be made. It joins decision-time WINDFOR forecasts to FUELHH wind outturn, exposes the exact publication used for every delivery hour, and reports retrospective error without hiding missing data.
@@ -609,6 +610,13 @@ The MVP is deployed publicly on the free tiers of Vercel (frontend) and Render (
 
 Verified on 28 October 2026: the health check reports `status: ok`, `data_mode: live`, `is_synthetic: false`, and a healthy Elexon dependency; CORS returns `access-control-allow-origin: https://windforecast5154.vercel.app`; the frontend returns HTTP 200.
 
+### Video walkthrough
+
+A recorded walkthrough is available at <https://youtu.be/MyGoVFgtJzk>:
+
+- **Part 1 (under 5 minutes):** the pilot presented to the client, covering the decision problem, the pages, and the limits.
+- **Part 2 (under 5 minutes):** a technical review of the architecture, data handling, forecast selection, metrics, code layout, and development practices.
+
 Active production configuration:
 
 ```text
@@ -723,12 +731,12 @@ Verified in this environment:
 - Lighthouse accessibility, best-practices, and SEO scores of 100 on Overview, Forecast Explorer, and Accuracy Analysis.
 - Docker Compose images built, both containers healthy, nginx proxy and Swagger working, and the backend running as a non-root user.
 - Public deployment on Vercel (frontend) and Render (backend) on 28 October 2026: health check `ok` in `live` mode, CORS accepting the Vercel origin, Swagger reachable, and the app pages loading.
+- A recorded two-part walkthrough: <https://youtu.be/MyGoVFgtJzk>.
 
 Not verified:
 
 - Heroku deployment. `backend/Procfile` and `backend/runtime.txt` are supplied but were not exercised; Render is the platform actually used.
 - Manual assistive-technology testing, load testing, or security testing.
-- A recorded video walkthrough.
 
 No API data, deployment URL, or test result in this document is fabricated. Synthetic fixture values are explicitly labelled. Real Elexon values are cited from actual live queries, with the caveat that upstream data can be revised.
 
